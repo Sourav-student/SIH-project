@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db_conn";
 import cloudinary from "@/lib/cloudinary_conn";
 import Galary from "@/models/galary_model";
+import { UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
+
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,18 +27,24 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Upload to Cloudinary
-    const uploadResult: any = await new Promise((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream(
-          { folder: "gallery" },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
-        )
-        .end(buffer);
-    });
+    const uploadResult: UploadApiResponse = await new Promise(
+      (resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream(
+            { folder: "gallery" },
+            (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
+              if (error) {
+                reject(error);
+              } else if (result) {
+                resolve(result);
+              } else {
+                reject(new Error("Unknown Cloudinary upload error"));
+              }
+            }
+          )
+          .end(buffer);
+      }
+    );
 
     // Save only useful info to MongoDB
     const newImage = await Galary.create({
@@ -101,7 +109,7 @@ export async function DELETE(req: NextRequest) {
       message: "Delete image successfully"
     });
   } catch (err: unknown) {
-   if (err instanceof Error) {
+    if (err instanceof Error) {
       console.error(err.message);
       return NextResponse.json({ error: err.message }, { status: 500 });
     }
