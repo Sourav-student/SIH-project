@@ -43,7 +43,7 @@ export default function Navigation() {
   };
 
   // Update crowd status
-  const updateCrowd = async (id: string, newCrowd: "Low" | "High") => {
+  const updateCrowd = async (id: string, newCrowd: "Low" | "High" | "Medium") => {
     await axios.put("/api/places", { id, crowd: newCrowd });
     setPlaces((prev) =>
       prev.map((p) => (p._id === id ? { ...p, crowd: newCrowd } : p))
