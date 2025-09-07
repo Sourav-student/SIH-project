@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
       uploadResult,
       saved: newImage,
     });
-  }catch (err: unknown) {
+  } catch (err: unknown) {
     if (err instanceof Error) {
       console.error(err.message);
       return NextResponse.json({ error: err.message }, { status: 500 });
@@ -74,12 +74,14 @@ export async function GET() {
       count: data.length,
       images: data,
     });
-  } catch (error: any) {
-    // console.error("GET /api/galary error:", error);
-    return NextResponse.json(
-      { success: false, error: error.message },
-      { status: 500 }
-    );
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err.message);
+      return NextResponse.json({ error: err.message }, { status: 500 });
+    }
+
+    console.error(err);
+    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
   }
 }
 
@@ -98,11 +100,13 @@ export async function DELETE(req: NextRequest) {
       success: true,
       message: "Delete image successfully"
     });
-  } catch (error: any) {
-    // console.error("GET /api/galary error:", error);
-    return NextResponse.json(
-      { success: false, error: error.message },
-      { status: 500 }
-    );
+  } catch (err: unknown) {
+   if (err instanceof Error) {
+      console.error(err.message);
+      return NextResponse.json({ error: err.message }, { status: 500 });
+    }
+
+    console.error(err);
+    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
   }
 }
