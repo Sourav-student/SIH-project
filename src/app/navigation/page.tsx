@@ -3,27 +3,6 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-
-const DefaultIcon = new L.Icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
-
-async function getLocationName(lat: number, lon: number): Promise<string> {
-  try {
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
-    );
-    const data = await res.json();
-    return data.display_name || "Unknown Location";
-  } catch (err) {
-    console.error("Geocoding error:", err);
-    return "Unknown Location";
-  }
-}
 
 interface Place {
   name: string;
@@ -39,62 +18,22 @@ const places: Place[] = [
 ];
 
 export default function Navigation() {
-  const [selected, setSelected] = useState<Place | null>(null);
-  const [locationName, setLocationName] = useState<string>("");
-
-  useEffect(() => {
-    if (selected) {
-      getLocationName(selected.coords[0], selected.coords[1]).then((name) =>
-        setLocationName(name)
-      );
-    }
-  }, [selected]);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 mt-6 mx-4">
-      <div className="lg:w-1/3 w-full space-y-4">
+    <div className="flex gap-6 mt-6 mx-4">
+      <div className="w-full space-y-4 flex flex-wrap gap-5">
         <h1 className="text-2xl font-semibold text-teal-700 mb-3 drop-shadow">
           🛕 Temples & Ghats
         </h1>
         {places.map((place, i) => (
           <button
             key={i}
-            onClick={() => setSelected(place)}
-            className={`w-full p-3 rounded-xl border shadow-lg transition text-left cursor-pointer ${
-              selected?.name === place.name
-                ? "bg-teal-600 text-white shadow-xl"
-                : "bg-white hover:bg-teal-50 text-gray-800"
-            }`}
+            className="w-fit m-5 p-3 rounded-xl border shadow-lg transition text-left cursor-pointer bg-white hover:bg-teal-50 text-gray-800"
           >
             <h3 className="font-medium">{place.name}</h3>
             <p className="text-sm opacity-80">📍 Tap to view on map</p>
           </button>
         ))}
-      </div>
-
-      <div className="lg:w-2/3 w-full h-[400px] lg:h-[500px] rounded-xl shadow-2xl border overflow-hidden">
-        <MapContainer
-          center={[23.1765, 75.7885]}
-          zoom={13}
-          scrollWheelZoom={true}
-          className="w-full h-full"
-          style={{ position: "relative", zIndex: 0 }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-
-          {selected && (
-            <Marker position={selected.coords} icon={DefaultIcon}>
-              <Popup>
-                <b>{selected.name}</b>
-                <br />
-                📍 {locationName || "Loading..."}
-              </Popup>
-            </Marker>
-          )}
-        </MapContainer>
       </div>
     </div>
   );
