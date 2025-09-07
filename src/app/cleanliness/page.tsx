@@ -25,7 +25,7 @@ export default function CleanlinesPage() {
               Join millions of devotees in maintaining the sanctity and cleanliness of our sacred spaces
             </p>
             <Link
-              href='/cleanlines/initiative'
+              href='/cleanliness/initiative'
               className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 cursor-pointer">
               Join the Initiative
             </Link>
