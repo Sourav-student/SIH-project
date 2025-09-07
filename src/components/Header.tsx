@@ -3,10 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Home, Map, Sparkles, ShoppingBag, Images, Leaf } from "lucide-react";
+import { useAppContext } from "@/Context/LoginContext";
 
 export default function Header() {
   const path = usePathname();
-
+  const {user} = useAppContext();
   const navItems = [
     { href: "/", label: "Home", icon: <Home size={20} /> },
     { href: "/navigation", label: "Navigation", icon: <Map size={20} /> },
@@ -53,6 +54,7 @@ export default function Header() {
               ))}
 
               {/* Profile (desktop) */}
+              {user?
               <Link
                 href="/profile"
                 className="ml-3 bg-[#363636] w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full cursor-pointer hover:opacity-90 transition"
@@ -65,6 +67,9 @@ export default function Header() {
                   className="w-5 h-5 sm:w-6 sm:h-6"
                 />
               </Link>
+              :
+              <div className="ml-3 w-9 h-9 sm:w-10 sm:h-10"/>
+              }
             </div>
 
             {/* Profile (mobile) */}

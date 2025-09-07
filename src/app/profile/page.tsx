@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type UserData = {
   name: string;
@@ -51,9 +52,11 @@ export default function Profile() {
       <div className="bg-white shadow-xl rounded-2xl w-full max-w-md p-6">
         <div className="flex flex-col items-center">
           {userData.image ? (
-            <img
+            <Image
               src={userData.image}
               alt="Profile"
+              width={250}
+              height={250}
               className="w-20 h-20 rounded-full object-cover shadow-md border"
             />
           ) : (

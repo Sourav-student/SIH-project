@@ -50,7 +50,7 @@ export default function CleanlinesPage() {
             <ul className="text-gray-600 space-y-2">
               <li>• Use water mindfully during rituals</li>
               <li>• Report water leaks immediately</li>
-              <li>• Don't waste drinking water</li>
+              <li>• Do not waste drinking water</li>
               <li>• Use eco-friendly soaps only</li>
             </ul>
           </div>

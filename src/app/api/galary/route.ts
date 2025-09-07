@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     const uploadResult: any = await new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
-          { folder: "gallery" }, // folder in Cloudinary
+          { folder: "gallery" },
           (error, result) => {
             if (error) reject(error);
             else resolve(result);
@@ -51,13 +51,19 @@ export async function POST(req: NextRequest) {
       uploadResult,
       saved: newImage,
     });
-  } catch (err: any) {
-    console.log(err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  }catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err.message);
+      return NextResponse.json({ error: err.message }, { status: 500 });
+    }
+
+    console.error(err);
+    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
   }
+
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     await dbConnect();
 

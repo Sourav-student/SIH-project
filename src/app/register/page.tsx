@@ -30,6 +30,7 @@ export default function RegisterForm() {
         toast.error(res.data.message);
       }
     } catch (error) {
+       console.log(error);
        toast.error("Fill correct information!");
     } finally {
       setFormData({

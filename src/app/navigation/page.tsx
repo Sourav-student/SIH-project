@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { relative } from "path";
 
-// ✅ Marker Icon fix for Next.js
 const DefaultIcon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
@@ -14,7 +12,6 @@ const DefaultIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-// ✅ Reverse Geocoding function
 async function getLocationName(lat: number, lon: number): Promise<string> {
   try {
     const res = await fetch(
@@ -28,7 +25,12 @@ async function getLocationName(lat: number, lon: number): Promise<string> {
   }
 }
 
-const places = [
+interface Place {
+  name: string;
+  coords: [number, number];
+}
+
+const places: Place[] = [
   { name: "Mahakaleshwar Jyotirlinga", coords: [23.1765, 75.7885] },
   { name: "Harsiddhi Temple", coords: [23.1851, 75.7775] },
   { name: "Kal Bhairav Temple", coords: [23.1825, 75.7773] },
@@ -37,7 +39,7 @@ const places = [
 ];
 
 export default function Navigation() {
-  const [selected, setSelected] = useState<any | null>(null);
+  const [selected, setSelected] = useState<Place | null>(null);
   const [locationName, setLocationName] = useState<string>("");
 
   useEffect(() => {
@@ -76,7 +78,7 @@ export default function Navigation() {
           zoom={13}
           scrollWheelZoom={true}
           className="w-full h-full"
-          style={{position:"relative", zIndex : 0}}
+          style={{ position: "relative", zIndex: 0 }}
         >
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
@@ -84,10 +86,7 @@ export default function Navigation() {
           />
 
           {selected && (
-            <Marker
-              position={selected.coords as [number, number]}
-              icon={DefaultIcon}
-            >
+            <Marker position={selected.coords} icon={DefaultIcon}>
               <Popup>
                 <b>{selected.name}</b>
                 <br />

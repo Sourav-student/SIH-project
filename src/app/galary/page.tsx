@@ -20,7 +20,7 @@ export default function Galary() {
   const [isSubmit, setIsSubmit] = useState(false);
   const [isloading, setIsloading] = useState(true);
   const [galary, setGalary] = useState<GalleryType[]>([]);
-  const [myGalary, setmyGalary] = useState<GalleryType[]>([]);
+  // const [myGalary, setmyGalary] = useState<GalleryType[]>([]);
 
   const { user } = useAppContext();
 
@@ -66,7 +66,7 @@ export default function Galary() {
           data.images.filter((item: GalleryType) => item.privacy === "Public")
         );
         setIsloading(false);
-        setmyGalary(data.images);
+        // setmyGalary(data.images);
       }
     };
     fetchImages();
@@ -172,7 +172,7 @@ export default function Galary() {
                   height={200}
                   className="w-full h-48 object-cover"
                 />
-                <div className="p-4 flex justify-between items-center">
+                {/* <div className="p-4 flex justify-between items-center">
                   <span
                     className={`px-3 py-1 text-xs font-semibold rounded-full ${
                       content.privacy === "Public"
@@ -182,7 +182,7 @@ export default function Galary() {
                   >
                     {content.privacy}
                   </span>
-                </div>
+                </div> */}
               </div>
             ))
           ) : (

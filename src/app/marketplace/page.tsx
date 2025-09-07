@@ -1,8 +1,3 @@
-'use client';
-
-import { ShoppingCart } from 'lucide-react';
-import { useState } from 'react';
-
 const marketplaceItems = [
   { id: 1, name: "Complete Puja Thali Set", price: 750, image: "🏺", category: "Religious Items", rating: 4.8 },
   { id: 2, name: "Sacred Rudraksha Mala", price: 1200, image: "📿", category: "Jewelry", rating: 4.9 },
@@ -10,9 +5,9 @@ const marketplaceItems = [
   { id: 4, name: "Spiritual Books Collection", price: 800, image: "📚", category: "Books", rating: 4.6 }
 ];
 
-export default function marketplacePage() {
+export default function marketplace() {
 
-  const [cartItems, setCartItems] = useState([]);
+  // const [cartItems, setCartItems] = useState([]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -70,7 +65,7 @@ export default function marketplacePage() {
           <h2 className="text-xl font-semibold mb-4">Verified Local Vendors</h2>
           <p className="text-gray-600 mb-4">
             All marketplace vendors are verified and approved by the Kumbh Mela administration.
-            Shop with confidence knowing you're getting authentic products at fair prices.
+            Shop with confidence knowing you are getting authentic products at fair prices.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-green-50 rounded-lg">
