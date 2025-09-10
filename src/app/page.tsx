@@ -33,7 +33,7 @@ export default function Page() {
         <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Explore Kumbh Mela</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <Link
-            href='/natigation'
+            href='/navigation'
             className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer group"
           >
             <div className="w-16 h-16 bg-orange-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors">
@@ -44,7 +44,7 @@ export default function Page() {
           </Link>
 
           <Link
-            href='rituals'
+            href='/rituals'
             className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer group"
           >
             <div className="w-16 h-16 bg-orange-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors">
@@ -55,7 +55,7 @@ export default function Page() {
           </Link>
 
           <Link
-            href='marketplace'
+            href='/marketplace'
             className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer group"
           >
             <div className="w-16 h-16 bg-orange-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors">
@@ -66,7 +66,7 @@ export default function Page() {
           </Link>
 
           <Link
-            href='cleanliness'
+            href='/cleanliness'
             className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer group"
           >
             <div className="w-16 h-16 bg-orange-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors">
