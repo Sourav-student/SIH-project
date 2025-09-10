@@ -42,10 +42,26 @@ This project aims to digitally represent the cultural, spiritual, and social ess
 - Grid-based, responsive layout with smooth transitions  
 
 ---
+### GitHub Link
+https://github.com/Sourav-student/ujjain-kumbh-2028
+
+### Deploy website links
+https://ujjain-kumbh.vercel.app/
 
 ## 🏗️ Project Setup
 
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/your-username/ujjain-kumbh-2028.git
+   git clone https://github.com/Sourav-student/ujjain-kumbh-2028
    cd ujjain-kumbh-2028
+
+2. Install all required packages
+   npm install
+# or
+    yarn install
+
+3. Run development server
+   npm run dev
+
+4. Open in browser
+   http://localhost:3000
