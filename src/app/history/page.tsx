@@ -49,7 +49,7 @@ const initialEntries: HeritageEntry[] = [
     shortSummary:
       "A scenic plateau known for sunrise viewpoints, pine forests and colonial-era bungalows.",
     description:
-      "Netarhat's cool climate and panoramic views made it a retreat historically. Today it's popular for sunrise viewpoints, trekking and nature-based tourism.",
+      "Netarhat is cool climate and panoramic views made it a retreat historically. Today it is popular for sunrise viewpoints, trekking and nature-based tourism.",
     location: "Latehar, Jharkhand",
     images: ["/images/netarhat.jpg"],
     tags: ["viewpoint", "plateau"],
@@ -78,7 +78,7 @@ const initialEntries: HeritageEntry[] = [
     shortSummary:
       "One of the 12 Jyotirlinga pilgrimage sites; draws large crowds during Shravan.",
     description:
-      "Deoghar's tourism history is dominated by religious visits. Seasonal markets and a centuries-old temple tradition shape the city's cultural calendar.",
+      "Deoghar is tourism history is dominated by religious visits. Seasonal markets and a centuries-old temple tradition shape the city is cultural calendar.",
     location: "Deoghar",
     images: ["/images/deoghar.jpg"],
     tags: ["pilgrimage", "religion"],
@@ -93,7 +93,7 @@ const initialEntries: HeritageEntry[] = [
     shortSummary:
       "The Santhal community is celebrated for music, dance and vibrant mural traditions.",
     description:
-      "One of India's largest tribal communities, Santhals maintain rich musical traditions, festivals like Sohrai and distinct agricultural practices. Preserving and sharing their oral traditions is central to cultural conservation.",
+      "One of India is largest tribal communities, Santhals maintain rich musical traditions, festivals like Sohrai and distinct agricultural practices. Preserving and sharing their oral traditions is central to cultural conservation.",
     images: ["/images/santhal.jpg"],
     tags: ["tribe", "music", "festival"],
     published: true,
@@ -137,7 +137,7 @@ export default function HistoryPage() {
           <div className="md:col-span-2 bg-white rounded-lg p-6 shadow">
             <h2 className="text-2xl font-semibold mb-3">Cultural Overview</h2>
             <p className="mb-4">
-              Jharkhand's cultural fabric is woven by tribal communities, oral traditions, handicrafts and rituals.
+              Jharkhand is cultural fabric is woven by tribal communities, oral traditions, handicrafts and rituals.
               This page preserves and shares those stories while providing practical tips for eco-responsible visitors.
             </p>
 
