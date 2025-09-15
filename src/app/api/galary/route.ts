@@ -4,7 +4,7 @@ import cloudinary from "@/lib/cloudinary_conn";
 import Galary from "@/models/galary_model";
 import { UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
 
-
+//Post request
 export async function POST(req: NextRequest) {
   try {
     await dbConnect();
@@ -93,28 +93,28 @@ export async function GET() {
   }
 }
 
-export async function DELETE(req: NextRequest) {
-  try {
-    await dbConnect();
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
+// export async function DELETE(req: NextRequest) {
+//   try {
+//     await dbConnect();
+//     const { searchParams } = new URL(req.url);
+//     const id = searchParams.get("id");
 
-    if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
-    }
+//     if (!id) {
+//       return NextResponse.json({ error: "ID is required" }, { status: 400 });
+//     }
 
-    await Galary.findByIdAndDelete(id);
-    return NextResponse.json({
-      success: true,
-      message: "Delete image successfully"
-    });
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.error(err.message);
-      return NextResponse.json({ error: err.message }, { status: 500 });
-    }
+//     await Galary.findByIdAndDelete(id);
+//     return NextResponse.json({
+//       success: true,
+//       message: "Delete image successfully"
+//     });
+//   } catch (err: unknown) {
+//     if (err instanceof Error) {
+//       console.error(err.message);
+//       return NextResponse.json({ error: err.message }, { status: 500 });
+//     }
 
-    console.error(err);
-    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
-  }
-}
+//     console.error(err);
+//     return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
+//   }
+// }

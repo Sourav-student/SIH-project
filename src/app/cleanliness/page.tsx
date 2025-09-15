@@ -7,8 +7,8 @@ export default function CleanlinesPage() {
         <h1 className="text-3xl font-bold mb-8">Cleanliness & Environmental Awareness</h1>
 
         {/* Hero Section */}
-        <div className="bg-green-500 text-white rounded-xl flex max-md:flex-col gap-3 justify-between items-center p-8 mb-8">
-          <div className="max-md:w-full w-[480px] h-full shadow-lg rounded-md overflow-hidden">
+        <div className="bg-green-500 text-white rounded-xl flex max-md:flex-col gap-3 justify-center items-center p-8 mb-8">
+          {/* <div className="max-md:w-full w-[480px] h-full shadow-lg rounded-md overflow-hidden">
             <video
               src="/galary/clean_India.mp4"
               autoPlay
@@ -17,7 +17,7 @@ export default function CleanlinesPage() {
               playsInline
               className="w-full h-full object-cover"
             />
-          </div>
+          </div> */}
           <div className="text-center">
             <div className="text-6xl mb-4">🌱</div>
             <h2 className="text-2xl font-bold mb-4">Keep Our Sacred Grounds Clean</h2>

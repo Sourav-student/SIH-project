@@ -1,87 +1,170 @@
-'use client';
-import { useEffect, useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { useAppContext } from "@/Context/LoginContext";
+import axios from "axios";
 import Image from "next/image";
 
 type UserData = {
+  user_name: string;
   name: string;
-  email: string;
-  phone: string;
+  phone_no: string;
   image: string;
+  email?: string;
 };
 
 export default function Profile() {
-  const [userData, setUserData] = useState<UserData>({
+  const router = useRouter();
+  const { setUser } = useAppContext();
+
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [editMode, setEditMode] = useState(false);
+  const [newUserData, setNewUserData] = useState<UserData>({
+    user_name: "",
     name: "",
-    email: "",
-    phone: "",
+    phone_no: "",
     image: "",
   });
-  const [editMode, setEditMode] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
 
-  //User info from localStorage
+  // Load profile
   useEffect(() => {
-    const stored = localStorage.getItem("user-profile");
-    if (stored) {
-      setUserData(JSON.parse(stored));
-    }
+    const fetchUser = async () => {
+      try {
+        const stored = localStorage.getItem("user-name");
+        if (!stored) return;
+
+        const user_name = JSON.parse(stored);
+        const res = await axios.get(`/api/user`, { params: { user_name } });
+
+        if (res.data?.data) setUserData(res.data.data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        toast.error("Failed to load profile");
+      }
+    };
+
+    fetchUser();
   }, []);
 
-  const firstLetter = userData.name
-    ? userData.name.charAt(0).toUpperCase()
-    : "U";
+  // Prepare form data when entering edit mode
+  useEffect(() => {
+    if (editMode && userData) {
+      setNewUserData({
+        user_name: userData.user_name,
+        name: userData.name,
+        phone_no: userData.phone_no,
+        image: userData.image,
+      });
+    }
+  }, [editMode, userData]);
 
-  // Save to localStorage
-  const handleSave = () => {
-    localStorage.setItem("user-profile", JSON.stringify(userData));
-    setEditMode(false);
+  const handleLogout = () => {
+    localStorage.removeItem("user-name");
+    localStorage.removeItem("profile-data");
+    setUser(false);
+    router.push("/");
+    toast.success("Logout successfully!");
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+    const selected = e.target.files?.[0];
+    if (selected) {
+      setFile(selected);
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setUserData({ ...userData, image: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+      reader.onloadend = () =>
+        setNewUserData({ ...newUserData, image: reader.result as string });
+      reader.readAsDataURL(selected);
     }
   };
 
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newUserData.user_name) return;
+
+    const formData = new FormData();
+    formData.append("user_name", newUserData.user_name);
+    formData.append("name", newUserData.name);
+    formData.append("phone_no", newUserData.phone_no);
+    if (file) formData.append("file", file);
+
+    try {
+      const res = await axios.patch("/api/user", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (res.data?.data) {
+        setUserData(res.data.data);
+        localStorage.setItem("profile-data", JSON.stringify(res.data.data));
+      }
+
+      toast.success("Profile updated!");
+      setEditMode(false);
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      toast.error("Failed to save profile");
+    }
+  };
+
+  if (!userData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-orange-50">
+        <p className="text-orange-700 text-lg">Loading profile...</p>
+      </div>
+    );
+  }
+
+  const firstLetter = userData.user_name
+    ? userData.user_name.charAt(0).toUpperCase()
+    : "U";
+
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white shadow-xl rounded-2xl w-full max-w-md p-6">
-        <div className="flex flex-col items-center">
-          {userData.image ? (
-            <Image
-              src={userData.image}
-              alt="Profile"
-              width={250}
-              height={250}
-              className="w-20 h-20 rounded-full object-cover shadow-md border"
-            />
-          ) : (
-            <div className="w-20 h-20 rounded-full bg-orange-500 flex items-center justify-center text-white text-3xl font-bold shadow-md">
-              {firstLetter}
-            </div>
-          )}
-          <h2 className="mt-4 text-xl font-semibold text-gray-800">
-            {userData.name || "Your Name"}
-          </h2>
+    <div className="min-h-screen font-serif bg-orange-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 text-center">
+        {/* Avatar */}
+        {userData.image ? (
+          <Image
+            src={userData.image}
+            alt="Profile"
+            width={96}
+            height={96}
+            className="w-24 h-24 mx-auto rounded-full object-cover shadow-md"
+          />
+        ) : (
+          <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-tr from-orange-500 to-orange-600 text-white flex items-center justify-center text-3xl font-bold shadow-md">
+            {firstLetter}
+          </div>
+        )}
+
+        {/* Name */}
+        <h1 className="mt-4 text-2xl font-bold text-gray-800">
+          {userData.user_name || "Your Name"}
+        </h1>
+
+        {/* Buttons */}
+        <div className="mt-6 flex flex-col gap-3">
           <button
-            onClick={() => setEditMode(!editMode)}
-            className="mt-3 px-5 py-2 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition cursor-pointer"
+            className="w-full py-2.5 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 cursor-pointer transition"
+            onClick={() => setEditMode((prev) => !prev)}
           >
             {editMode ? "Cancel" : "Edit Profile"}
           </button>
+          <button
+            className="w-full py-2.5 bg-white text-orange-700 font-semibold border border-orange-300 rounded-lg hover:bg-orange-50 transition cursor-pointer"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
 
-
-        {/* this is a edit mode section */}
+        {/* Edit Mode */}
         {editMode && (
-          <div className="mt-6 space-y-4">
+          <form onSubmit={handleSave} className="mt-8 space-y-4 text-left">
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Profile Picture
+              <label className="block text-sm font-semibold text-gray-700">
+                Profile Image
               </label>
               <input
                 type="file"
@@ -92,67 +175,53 @@ export default function Profile() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-semibold text-gray-700">
                 Name
               </label>
               <input
                 type="text"
-                value={userData.name}
+                value={newUserData.name ?? ""}
                 onChange={(e) =>
-                  setUserData({ ...userData, name: e.target.value })
+                  setNewUserData({ ...newUserData, name: e.target.value })
                 }
                 className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Email
-              </label>
-              <input
-                type="email"
-                value={userData.email}
-                onChange={(e) =>
-                  setUserData({ ...userData, email: e.target.value })
-                }
-                className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Phone
+              <label className="block text-sm font-semibold text-gray-700">
+                Phone No.
               </label>
               <input
                 type="tel"
-                value={userData.phone}
+                value={newUserData.phone_no?? ""}
                 onChange={(e) =>
-                  setUserData({ ...userData, phone: e.target.value })
+                  setNewUserData({ ...newUserData, phone_no: e.target.value })
                 }
                 className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none"
               />
             </div>
 
             <button
-              onClick={handleSave}
+              type="submit"
               className="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
             >
               Save
             </button>
-          </div>
+          </form>
         )}
 
-        {/* when no edit mode then shown  */}
+        {/* View Mode */}
         {!editMode && (
-          <div className="mt-6 space-y-3 text-gray-700">
-            <p>
-              <span className="font-medium">📧 Email:</span>{" "}
-              {userData.email || "Not set"}
-            </p>
-            <p>
-              <span className="font-medium">📱 Phone:</span>{" "}
-              {userData.phone || "Not set"}
-            </p>
+          <div className="mt-8 space-y-4 text-left">
+            {/* <div className="bg-orange-100 rounded-lg px-4 py-3">
+              <p className="text-sm font-semibold text-gray-700">📧 Email</p>
+              <p className="text-gray-800">{userData.email || "Not set"}</p>
+            </div> */}
+            <div className="bg-orange-100 rounded-lg px-4 py-3">
+              <p className="text-sm font-semibold text-gray-700">📱 Phone</p>
+              <p className="text-gray-800">{userData.phone_no || "Not set"}</p>
+            </div>
           </div>
         )}
       </div>

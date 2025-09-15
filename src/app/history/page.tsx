@@ -1,78 +1,188 @@
-export default function History() {
+"use client"
+import Head from "next/head";
+import Image from "next/image";
+import { useState } from "react";
+
+type CMSCategory = "site" | "tribe" | "festival" | "article";
+
+type HeritageEntry = {
+  id: string;
+  title: string;
+  slug?: string;
+  category: CMSCategory;
+  shortSummary: string;
+  description: string;
+  location?: string;
+  lat?: number;
+  lng?: number;
+  images?: string[];
+  tags?: string[];
+  published?: boolean;
+  contributor?: string;
+  date?: string;
+};
+
+const initialEntries: HeritageEntry[] = [
+  {
+    id: "betla",
+    title: "Betla National Park",
+    slug: "betla-national-park",
+    category: "site",
+    shortSummary:
+      "A verdant sanctuary within the Palamau Tiger Reserve known for sal forests and wildlife safaris.",
+    description:
+      "Betla National Park is part of the Palamau Tiger Reserve. Historically a hunting ground, it now focuses on conservation and eco-tourism with tribal settlements nearby. Known for sal forests, diverse wildlife and guided safaris.",
+    location: "Palamu, Jharkhand",
+    lat: 24.0529,
+    lng: 84.3662,
+    images: ["/images/betla.jpg"],
+    tags: ["eco", "wildlife", "forest"],
+    published: true,
+    contributor: "Admin",
+    date: "2023-10-01",
+  },
+  {
+    id: "netarhat",
+    title: "Netarhat",
+    slug: "netarhat",
+    category: "site",
+    shortSummary:
+      "A scenic plateau known for sunrise viewpoints, pine forests and colonial-era bungalows.",
+    description:
+      "Netarhat's cool climate and panoramic views made it a retreat historically. Today it's popular for sunrise viewpoints, trekking and nature-based tourism.",
+    location: "Latehar, Jharkhand",
+    images: ["/images/netarhat.jpg"],
+    tags: ["viewpoint", "plateau"],
+    published: true,
+    contributor: "LocalGuide",
+    date: "2022-02-14",
+  },
+  {
+    id: "hundru",
+    title: "Hundru Falls",
+    category: "site",
+    shortSummary: "A spectacular waterfall on the Subarnarekha River with strong local folklore.",
+    description:
+      "Hundru Falls is a seasonal waterfall that attracts families and nature lovers, especially during the monsoon. Several local folk tales are associated with the falls.",
+    location: "Ranchi district",
+    images: ["/images/hundru.jpg"],
+    tags: ["waterfall", "folklore"],
+    published: true,
+    contributor: "VisitorA",
+    date: "2022-08-05",
+  },
+  {
+    id: "deoghar",
+    title: "Deoghar (Baidyanath Temple)",
+    category: "site",
+    shortSummary:
+      "One of the 12 Jyotirlinga pilgrimage sites; draws large crowds during Shravan.",
+    description:
+      "Deoghar's tourism history is dominated by religious visits. Seasonal markets and a centuries-old temple tradition shape the city's cultural calendar.",
+    location: "Deoghar",
+    images: ["/images/deoghar.jpg"],
+    tags: ["pilgrimage", "religion"],
+    published: true,
+    contributor: "ResearcherB",
+    date: "2021-07-20",
+  },
+  {
+    id: "santhal",
+    title: "Santhal (Tribal Profile)",
+    category: "tribe",
+    shortSummary:
+      "The Santhal community is celebrated for music, dance and vibrant mural traditions.",
+    description:
+      "One of India's largest tribal communities, Santhals maintain rich musical traditions, festivals like Sohrai and distinct agricultural practices. Preserving and sharing their oral traditions is central to cultural conservation.",
+    images: ["/images/santhal.jpg"],
+    tags: ["tribe", "music", "festival"],
+    published: true,
+    contributor: "AnthropologyDept",
+    date: "2020-03-10",
+  },
+];
+
+export default function HistoryPage() {
+  const [entries, setEntries] = useState<HeritageEntry[]>(initialEntries);
+
   return (
-    <div className="bg-gray-50 min-h-screen">
-      <div className="max-w-5xl mx-auto px-6 py-10">
-        {/* Header */}
-        <h1 className="text-3xl md:text-4xl font-bold text-center text-teal-800 mb-8">
-          📖 History of <span className="text-orange-600">Maha Kumbh Mela</span>
-        </h1>
-
-        {/* Intro Section */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-10">
-          <p className="text-gray-700 text-lg leading-relaxed">
-            The <b>Maha Kumbh Mela</b> is the world’s largest spiritual gathering, held once every 12 years
-            at one of the four sacred sites: <span className="font-semibold">Prayagraj, Haridwar, Ujjain,</span> 
-            and <span className="font-semibold">Nashik</span>. Rooted in ancient mythology, the Mela is 
-            celebrated where drops of the divine nectar of immortality (<i>Amrit</i>) fell during the celestial 
-            battle between Devas (gods) and Asuras (demons).
-          </p>
+    <>
+      <section className="bg-gradient-to-r from-orange-400 to-red-400 text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-extrabold">History & Heritage — Jharkhand</h1>
+              <p className="mt-3 max-w-2xl">
+                Discover tribal traditions, historical evolution, and eco-cultural sites. Respectful, verified
+                stories and images from local communities and visitors.
+              </p>
+            </div>
+            <div className="w-full md:w-1/3">
+              <div className="rounded-lg overflow-hidden shadow-lg bg-white/20 p-4">
+                <p className="text-sm">Quick facts</p>
+                <ul className="mt-2 text-sm">
+                  <li>• Diverse tribal communities (Santhal, Munda, Ho, Oraon)</li>
+                  <li>• Important eco-sites (Betla, Netarhat, Hundru)</li>
+                  <li>• Conservation & sustainable tourism focus</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Mythology Section */}
-        <div className="mb-10">
-          <h2 className="text-2xl font-semibold text-orange-700 mb-4">
-            🌌 Mythological Significance
-          </h2>
-          <div className="bg-gradient-to-r from-orange-50 to-orange-100 p-6 rounded-2xl shadow-md">
-            <p className="text-gray-700 leading-relaxed">
-              According to legend, during the <b>Samudra Manthan</b> (churning of the cosmic ocean),
-              the gods and demons fought over the pot of nectar. Lord Vishnu, disguised as <b>Mohini</b>,
-              carried the pot, and drops of nectar fell at four locations—these became the sites of the 
-              sacred Kumbh Mela. Bathing in the holy rivers during the Mela is believed to cleanse sins 
-              and lead to <b>Moksha</b> (liberation).
+      {/* OVERVIEW + TIMELINE */}
+      <section className="container mx-auto px-4 py-10">
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="md:col-span-2 bg-white rounded-lg p-6 shadow">
+            <h2 className="text-2xl font-semibold mb-3">Cultural Overview</h2>
+            <p className="mb-4">
+              Jharkhand's cultural fabric is woven by tribal communities, oral traditions, handicrafts and rituals.
+              This page preserves and shares those stories while providing practical tips for eco-responsible visitors.
             </p>
+
+            <h3 className="text-lg font-medium mt-4 mb-2">Key Traditions & Festivals</h3>
+            <div className="flex flex-wrap gap-2">
+              {["Sohrai", "Sarhul", "Karma", "Chait Parab"].map((f) => (
+                <span key={f} className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm">
+                  {f}
+                </span>
+              ))}
+            </div>
+
+            <h3 className="text-lg font-medium mt-6 mb-2">Tourism History — Timeline</h3>
+            <ol className="border-l-2 border-emerald-200 ml-4 pl-6 space-y-4">
+              <li>
+                <div className="text-sm text-emerald-600 font-semibold">Pre-colonial & Colonial era</div>
+                <div className="text-sm">Local pilgrimage sites and forest retreats documented by early travellers.</div>
+              </li>
+              <li>
+                <div className="text-sm text-emerald-600 font-semibold">Post-Independence</div>
+                <div className="text-sm">Infrastructure growth; nature reserves like Betla gained attention.</div>
+              </li>
+              <li>
+                <div className="text-sm text-emerald-600 font-semibold">1990s–2010s</div>
+                <div className="text-sm">Eco-tourism awareness, wildlife safaris and trekking routes emerged.</div>
+              </li>
+              <li>
+                <div className="text-sm text-emerald-600 font-semibold">2010s–Present</div>
+                <div className="text-sm">Digital promotion and community-driven tourism; focus on sustainability.</div>
+              </li>
+            </ol>
           </div>
-        </div>
 
-        {/* Timeline Section */}
-        <div className="mb-10">
-          <h2 className="text-2xl font-semibold text-orange-700 mb-6">
-            📅 Historical Timeline
-          </h2>
-          <div className="space-y-4">
-            <div className="bg-white p-4 rounded-lg shadow hover:shadow-md transition">
-              <p><b>Ancient Era:</b> References to ritual bathing during auspicious times are found in the <i>Rigveda</i> and <i>Puranas</i>.</p>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow hover:shadow-md transition">
-              <p><b>Medieval Period:</b> Chinese traveler Xuanzang (7th century) described large bathing festivals in India.</p>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow hover:shadow-md transition">
-              <p><b>Modern Times:</b> The British documented the scale of the Mela, noting millions of pilgrims gathering in unity.</p>
-            </div>
-          </div>
+          {/* QUICK TIPS CARD */}
+          <aside className="bg-white rounded-lg p-6 shadow">
+            <h3 className="font-semibold mb-3">Visitor Tips</h3>
+            <ul className="space-y-2 text-sm">
+              <li>• Best time: Oct–Mar (monsoon for waterfalls)</li>
+              <li>• Respect sacred groves and local customs</li>
+              <li>• Buy crafts directly from artisans</li>
+              <li>• Avoid single-use plastics</li>
+            </ul>
+          </aside>
         </div>
-
-        {/* Fun Facts */}
-        <div className="mb-10">
-          <h2 className="text-2xl font-semibold text-orange-700 mb-4">
-            ✨ Interesting Facts
-          </h2>
-          <ul className="list-disc list-inside space-y-2 text-gray-700">
-            <li>The Maha Kumbh at Prayagraj in 2013 attracted over <b>120 million people</b>—making it the largest human gathering in history.</li>
-            <li>It is recognized by <b>UNESCO</b> as an “Intangible Cultural Heritage of Humanity.”</li>
-            <li>Astronomical calculations decide the exact dates based on the positions of the <b>Sun, Moon, and Jupiter</b>.</li>
-            <li>The holy dip (<b>Shahi Snan</b>) is the central ritual, led by revered saints and akharas.</li>
-          </ul>
-        </div>
-
-        {/* Closing Section */}
-        <div className="bg-gradient-to-r from-teal-50 to-teal-100 p-6 rounded-2xl shadow-md text-center">
-          <p className="text-lg text-gray-800">
-            The <b>Maha Kumbh Mela</b> is not just a festival—it is a confluence of <span className="text-teal-700 font-semibold">faith, tradition, culture, and unity</span>, 
-            connecting millions of people across the world in a single spiritual journey.
-          </p>
-        </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }

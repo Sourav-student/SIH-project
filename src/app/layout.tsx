@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ujjain Kumbh 2028",
-  description: "Official website for Ujjain Kumbh 2028. Find information about events, schedules, travel, accommodations, and updates for the upcoming Kumbh Mela in Ujjain.",
+  title: "JharkhandTour",
+  description: "Official website for JharkhandTour. Find information about events, schedules, travel, accommodations, and update.",
 };
 
 export default function RootLayout({

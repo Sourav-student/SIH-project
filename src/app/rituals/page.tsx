@@ -40,12 +40,14 @@ export default function Rituals() {
           <div className="relative bg-gradient-to-br from-orange-200 to-red-200 rounded-lg overflow-hidden">
             <div className="aspect-video flex items-center justify-center">
               <iframe
-                className="w-full h-full rounded-xl shadow-lg"
-                src="https://www.youtube.com/embed/7NmM1iVumnU?si=qRMil9l_muQGbxR2"
-                title="Ujjain History Video"
+                src="https://www.youtube.com/embed/IPmKVmN3BPE?si=7NCIAvsZ-fpAS_Wb"
+                title="YouTube video player"
+                className="absolute top-0 left-0 w-full h-full"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-              ></iframe>
+              />
             </div>
           </div>
           {/* history of mahakumbh */}

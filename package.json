@@ -12,15 +12,12 @@
     "argon2": "^0.44.0",
     "axios": "^1.11.0",
     "cloudinary": "^2.7.0",
-    "leaflet": "^1.9.4",
-    "leaflet-control-geocoder": "^3.3.0",
     "lucide-react": "^0.542.0",
     "mongoose": "^8.18.0",
     "motion": "^12.23.12",
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-leaflet": "^5.0.0",
     "react-toastify": "^11.0.5"
   },
   "devDependencies": {

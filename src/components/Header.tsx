@@ -4,10 +4,17 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Home, Map, Sparkles, ShoppingBag, Images, Leaf } from "lucide-react";
 import { useAppContext } from "@/Context/LoginContext";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const path = usePathname();
-  const {user} = useAppContext();
+  const { user } = useAppContext();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const navItems = [
     { href: "/", label: "Home", icon: <Home size={20} /> },
     { href: "/navigation", label: "Navigation", icon: <Map size={20} /> },
@@ -17,21 +24,23 @@ export default function Header() {
     { href: "/cleanliness", label: "Clean", icon: <Leaf size={20} /> },
   ];
 
+  // Wait until mounted to avoid hydration mismatch
+  if (!mounted) return null;
+
   return (
     <header>
       {/* Top Navbar */}
       <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            
             {/* Logo */}
             <Link href="/" className="flex items-center cursor-pointer">
               <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center mr-3">
                 <span className="text-white text-lg font-bold">🏛️</span>
               </div>
-              <div className="hidden sm:block"> {/* hide text on very small screens */}
+              <div className="hidden sm:block">
                 <h1 className="text-lg sm:text-xl font-bold text-orange-600 leading-tight">
-                  Ujjain Kumbh 2028
+                  JharkhandTour
                 </h1>
                 <p className="text-xs text-gray-600">Digital Guide</p>
               </div>
@@ -54,38 +63,42 @@ export default function Header() {
               ))}
 
               {/* Profile (desktop) */}
-              {user?
-              <Link
-                href="/profile"
-                className="ml-3 bg-[#363636] w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full cursor-pointer hover:opacity-90 transition"
-              >
-                <Image
-                  src="/profile_img.svg"
-                  alt="profile_image"
-                  width={24}
-                  height={24}
-                  className="w-5 h-5 sm:w-6 sm:h-6"
-                />
-              </Link>
-              :
-              <div className="ml-3 w-9 h-9 sm:w-10 sm:h-10"/>
-              }
+              {user ? (
+                <Link
+                  href="/profile"
+                  className="ml-3 bg-[#363636] w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full cursor-pointer hover:opacity-90 transition"
+                >
+                  <Image
+                    src="/profile_img.svg"
+                    alt="profile_image"
+                    width={24}
+                    height={24}
+                    className="w-5 h-5 sm:w-6 sm:h-6"
+                  />
+                </Link>
+              ) : (
+                <div className="ml-3 w-9 h-9 sm:w-10 sm:h-10" />
+              )}
             </div>
 
             {/* Profile (mobile) */}
             <div className="lg:hidden">
-              <Link
-                href="/profile"
-                className="bg-[#363636] w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:opacity-90 transition"
-              >
-                <Image
-                  src="/profile_img.svg"
-                  alt="profile_image"
-                  width={20}
-                  height={20}
-                  className="w-5 h-5"
-                />
-              </Link>
+              {user ? (
+                <Link
+                  href="/profile"
+                  className="ml-3 bg-[#363636] w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full cursor-pointer hover:opacity-90 transition"
+                >
+                  <Image
+                    src="/profile_img.svg"
+                    alt="profile_image"
+                    width={24}
+                    height={24}
+                    className="w-5 h-5 sm:w-6 sm:h-6"
+                  />
+                </Link>
+              ) : (
+                <div className="ml-3 w-9 h-9 sm:w-10 sm:h-10" />
+              )}
             </div>
           </div>
         </div>
