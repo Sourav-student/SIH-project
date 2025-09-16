@@ -3,30 +3,50 @@ import Link from "next/link";
 const rituals = [
   {
     id: 1,
-    title: "The Holy Dip (Shahi Snan)",
-    description: "Experience the sacred ritual of bathing in the holy waters during the most auspicious moments of Kumbh Mela.",
-    image: "🏊‍♂️",
-    duration: "45 mins",
-    timing: "4:00 AM - 10:00 AM"
+    title: "Chhath Puja on Riverbanks",
+    description:
+      "A serene ritual where devotees offer prayers to the rising and setting sun on the banks of rivers like Subarnarekha and Koel.",
+    image: "🌅",
+    duration: "2–3 hrs",
+    timing: "Sunrise & Sunset (Seasonal)"
   },
   {
     id: 2,
-    title: "The Grand Aarti",
-    description: "Witness the magnificent evening aarti ceremony with thousands of devotees participating in this spiritual celebration.",
-    image: "🕉️",
-    duration: "30 mins",
-    timing: "6:00 PM - 7:00 PM"
+    title: "Sarhul Celebration",
+    description:
+      "Witness the tribal spring festival where Sal tree flowers are worshipped, symbolizing the bond between nature and life.",
+    image: "🌸",
+    duration: "Half Day",
+    timing: "March–April (Morning)"
   },
   {
     id: 3,
-    title: "Spiritual Discourse",
-    description: "Listen to renowned saints and spiritual leaders sharing ancient wisdom and teachings.",
-    image: "📿",
-    duration: "60 mins",
-    timing: "8:00 AM - 9:00 AM"
+    title: "Karma Puja",
+    description:
+      "Join the traditional dance and prayers around the Karma tree — an ancient festival celebrating prosperity and brotherhood.",
+    image: "🌳",
+    duration: "Evening–Night",
+    timing: "August–September"
+  },
+  {
+    id: 4,
+    title: "Basant Mahotsav at Shantiniketan Border",
+    description:
+      "Enjoy colorful spring celebrations with folk songs, dances, and cultural performances near Jharkhand’s borders.",
+    image: "🎨",
+    duration: "3–4 hrs",
+    timing: "Morning to Noon (Spring)"
+  },
+  {
+    id: 5,
+    title: "Pahaariya Spiritual Gathering",
+    description:
+      "A soulful meet of local communities in hilly regions with devotional music and age-old rituals.",
+    image: "⛰️",
+    duration: "1–2 hrs",
+    timing: "Evening (Varies)"
   }
 ];
-
 
 export default function Rituals() {
   return (
