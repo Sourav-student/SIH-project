@@ -65,7 +65,7 @@ export default function Marketplace() {
         <div className="mt-12 bg-white rounded-xl shadow-lg p-6">
           <h2 className="text-lg sm:text-xl font-semibold mb-4">Verified Local Vendors</h2>
           <p className="text-gray-600 mb-6 text-sm sm:text-base">
-            All marketplace vendors are verified and approved by the Kumbh Mela administration.
+            All marketplace vendors are verified and approved by the JharKhand administration.
             Shop with confidence knowing you are getting authentic products at fair prices.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
