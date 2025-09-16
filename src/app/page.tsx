@@ -45,7 +45,7 @@ export default function Page() {
               transition={{ delay: 0.6, duration: 0.7 }}
               className="text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed"
             >
-              Experience the spiritual magnificence of Kumbh Mela with our
+              Experience the spiritual magnificence of Jharkhand with our
               comprehensive digital guide. Navigate with ease, explore sacred
               rituals, and discover local treasures.
             </motion.p>
