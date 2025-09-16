@@ -53,7 +53,7 @@ export default function Rituals() {
           {/* history of mahakumbh */}
           <div className="mt-10 flex justify-between items-center bg-gradient-to-r from-orange-50 to-orange-100 p-6 rounded-2xl shadow-md">
             <p className="text-xl text-gray-800">
-              Know the <span className="font-semibold text-orange-700">History of Maha Kumbh</span>
+              Know the <span className="font-semibold text-orange-700">History of Jharkhand</span>
             </p>
             <Link href='/history' className="px-6 py-2 bg-orange-600 text-white rounded-xl shadow hover:bg-orange-700 transition cursor-pointer">
               Explore
