@@ -50,7 +50,7 @@ export default function LoginForm() {
           onSubmit={handleSubmit}
         >
           <h2 className="text-2xl font-bold text-center mb-6 text-white">
-            Login to <span className="text-orange-200">Ujjain Kumbh 2028</span>
+            Login to <span className="text-orange-200">JharkhandTour</span>
           </h2>
 
           {/* Email Field */}
