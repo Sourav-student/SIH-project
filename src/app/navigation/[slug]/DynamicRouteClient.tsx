@@ -36,7 +36,7 @@ export default function DynamicRouteClient({ query }: { query?: string }) {
         const res = await axios.get("/api/places");
         if (res.data.success) {
           const filtered = query
-            ? res.data.places.find((p: any) => p._id === query)
+            ? res.data.places.find((p: PlaceType) => p._id === query)
             : res.data.places[0];
           setPlace(filtered || null);
         }
