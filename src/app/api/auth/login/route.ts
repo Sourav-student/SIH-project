@@ -30,6 +30,11 @@ export async function POST(req: NextRequest) {
       message: "Login successfully!",
       user_info: {
         user_name: user.user_name,
+        name : user.name,
+        phone_no : user.phone_no,
+        email : user.email,
+        image : user.image,
+        role : user.role
       }
     }, { status: 201 })
 

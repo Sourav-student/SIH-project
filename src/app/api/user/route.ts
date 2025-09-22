@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/user_model";
 import dbConnect from "@/lib/db_conn";
 import cloudinary from "@/lib/cloudinary_conn";
-import { UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
+import { UploadApiResponse } from "cloudinary";
 
 //patch data
 export async function PATCH(req: NextRequest) {
@@ -70,7 +70,7 @@ export async function GET(req: NextRequest) {
     await dbConnect();
 
     const user = await User.findOne({ user_name }).select(
-      "user_name email phone_no image"
+      "user_name email phone_no image name role"
     );
 
     if (!user) {

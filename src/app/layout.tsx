@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoginContext } from "@/Context/LoginContext";
+import ChatBot from "@/components/Chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
           <Headers />
           {children}
           <Footer />
+          <ChatBot />
           <ToastContainer />
         </LoginContext>
       </body>

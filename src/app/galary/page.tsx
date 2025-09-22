@@ -10,6 +10,7 @@ type GalleryType = {
   image: string;
   privacy: string;
   _id: string;
+  user_name : string
 };
 
 export default function Galary() {
@@ -35,7 +36,7 @@ export default function Galary() {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("privacy", privacy);
-    formData.append("user_name", user_name);
+    formData.append("user_name", JSON.parse(user_name));
 
     try {
       const res = await axios.post("/api/galary", formData, {
@@ -163,7 +164,7 @@ export default function Galary() {
             galary.map((content) => (
               <div
                 key={content._id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow relative"
               >
                 <Image
                   src={content.image}
@@ -172,7 +173,7 @@ export default function Galary() {
                   height={200}
                   className="w-full h-48 object-cover"
                 />
-                {/* <div className="p-4 flex justify-between items-center">
+                <div className="p-4 flex justify-between items-center absolute z-10 bottom-0">
                   <span
                     className={`px-3 py-1 text-xs font-semibold rounded-full ${
                       content.privacy === "Public"
@@ -180,9 +181,9 @@ export default function Galary() {
                         : "bg-gray-200 text-gray-600"
                     }`}
                   >
-                    {content.privacy}
+                    {content.user_name}
                   </span>
-                </div> */}
+                </div>
               </div>
             ))
           ) : (

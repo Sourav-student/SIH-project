@@ -45,14 +45,12 @@ export default function Page() {
               transition={{ delay: 0.6, duration: 0.7 }}
               className="text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed"
             >
-              Experience the spiritual magnificence of Jharkhand with our
-              comprehensive digital guide. Navigate with ease, explore sacred
-              rituals, and discover local treasures.
+             Explore Jharkhand&apos;s sacred sites, vibrant rituals, and hidden treasures — all in one place.
             </motion.p>
 
             <motion.div whileHover={{ scale: 1.05 }}>
               <Link
-                href="/galary"
+                href="/navigation"
                 className="inline-block bg-gradient-to-r from-white to-orange-100 text-orange-700 px-8 py-3 rounded-lg font-semibold text-lg shadow hover:shadow-xl transition"
               >
                 Start Your Journey
@@ -118,10 +116,9 @@ export default function Page() {
       {/* Stats Section */}
       <section className="bg-orange-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-center">
             {[
               { number: "50M+", label: "Expected Visitors" },
-              { number: "12", label: "Sacred Bathing Days" },
               { number: "1000+", label: "Cultural Programs" },
               { number: "24/7", label: "Digital Support" },
             ].map((stat, i) => (

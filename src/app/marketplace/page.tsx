@@ -1,30 +1,64 @@
 "use client";
+import { useState } from "react";
 
-const marketplaceItems = [
+type ItemType = {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  category: string;
+  rating: number;
+};
+
+const marketplaceItems: ItemType[] = [
   { id: 1, name: "Complete Puja Thali Set", price: 750, image: "🏺", category: "Religious Items", rating: 4.8 },
   { id: 2, name: "Sacred Rudraksha Mala", price: 1200, image: "📿", category: "Jewelry", rating: 4.9 },
   { id: 3, name: "Holy Water Kalash", price: 500, image: "⚱️", category: "Religious Items", rating: 4.7 },
-  { id: 4, name: "Spiritual Books Collection", price: 800, image: "📚", category: "Books", rating: 4.6 }
+  { id: 4, name: "Spiritual Books Collection", price: 800, image: "📚", category: "Books", rating: 4.6 },
+  { id: 5, name: "Silver Locket Pendant", price: 1500, image: "🪙", category: "Jewelry", rating: 4.5 },
+  { id: 6, name: "Incense Stick Pack", price: 250, image: "🕯️", category: "Religious Items", rating: 4.3 },
+  { id: 7, name: "Meditation Mat", price: 1200, image: "🧘", category: "Religious Items", rating: 4.7 },
+  { id: 8, name: "Holy Scriptures", price: 950, image: "📖", category: "Books", rating: 4.8 },
 ];
 
 export default function Marketplace() {
+  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const [sortOption, setSortOption] = useState("Price: Low to High");
+
+  const filteredItems = marketplaceItems
+    .filter(item => selectedCategory === "All Categories" || item.category === selectedCategory)
+    .sort((a, b) => {
+      if (sortOption === "Price: Low to High") return a.price - b.price;
+      if (sortOption === "Price: High to Low") return b.price - a.price;
+      if (sortOption === "Rating") return b.rating - a.rating;
+      return 0;
+    });
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 font-sans">
       <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-        
+
         {/* Header + Filters */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
             Local Marketplace
           </h1>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm sm:text-base">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm sm:text-base"
+            >
               <option>All Categories</option>
               <option>Religious Items</option>
               <option>Jewelry</option>
               <option>Books</option>
             </select>
-            <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm sm:text-base">
+            <select
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm sm:text-base"
+            >
               <option>Price: Low to High</option>
               <option>Price: High to Low</option>
               <option>Rating</option>
@@ -34,7 +68,7 @@ export default function Marketplace() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {marketplaceItems.map((item) => (
+          {filteredItems.map((item) => (
             <div
               key={item.id}
               className="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden flex flex-col"
@@ -65,7 +99,7 @@ export default function Marketplace() {
         <div className="mt-12 bg-white rounded-xl shadow-lg p-6">
           <h2 className="text-lg sm:text-xl font-semibold mb-4">Verified Local Vendors</h2>
           <p className="text-gray-600 mb-6 text-sm sm:text-base">
-            All marketplace vendors are verified and approved by the JharKhand administration.
+            All marketplace vendors are verified and approved by the Jharkhand administration.
             Shop with confidence knowing you are getting authentic products at fair prices.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const query = encodeURIComponent(name);
+    const query = [encodeURIComponent(name), "Jharkhand"].join();
 
     const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
 

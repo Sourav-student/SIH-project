@@ -104,7 +104,7 @@ export default function Rituals() {
         </div>
 
         {/* Schedule Section */}
-        <div className="mt-12 bg-white rounded-xl shadow-lg p-6">
+        {/* <div className="mt-12 bg-white rounded-xl shadow-lg p-6">
           <h2 className="text-xl font-semibold mb-6">Daily Schedule</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="text-center p-4 bg-orange-50 rounded-lg">
@@ -124,7 +124,7 @@ export default function Rituals() {
               <div className="text-sm">Evening Aarti</div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

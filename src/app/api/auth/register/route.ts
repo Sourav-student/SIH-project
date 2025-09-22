@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   try {
     const { email, user_name, password } = await req.json();
     const hash_password = await argon.hash(password);
-    const hash_email = await argon.hash(email);
+    // const hash_email = await argon.hash(email);
     // Check if email exists
     const existingUserByEmail = await User.findOne({ email });
     if (existingUserByEmail) {
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Create new user
-    await User.create({ email : hash_email, user_name, password : hash_password});
+    await User.create({ email, user_name, password : hash_password});
 
     return NextResponse.json({
       success: true,

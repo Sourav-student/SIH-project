@@ -11,7 +11,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   await dbConnect();
   try {
-    const { name, crowd } = await req.json();
+    const { name, crowd, info } = await req.json();
 
     if (!name) {
       return NextResponse.json(
@@ -22,8 +22,18 @@ export async function POST(req: NextRequest) {
 
     const newPlace = await Place.create({
       name,
-      crowd: crowd,
+      crowd: crowd || "Low",
+      info: {
+        placeInfo: info?.placeInfo || "",
+        hospitals: info?.hospitals || [],
+        temperature: info?.temperature || "",
+        aqi: info?.aqi || "",
+        hotels: info?.hotels || [],
+        feedbacks: info?.feedbacks || [],
+      },
     });
+
+    console.log(newPlace);
 
     return NextResponse.json({ success: true, place: newPlace });
   } catch (error) {
@@ -34,14 +44,53 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function PUT(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
   await dbConnect();
-  const { id, crowd } = await req.json();
+  const { id, crowd, info } = await req.json();
 
-  if (!id || !crowd) {
-    return NextResponse.json({ success: false, error: "Invalid request" }, { status: 400 });
+  if (!id) {
+    return NextResponse.json({ success: false, error: "Place ID is required" }, { status: 400 });
   }
 
-  const updated = await Place.findByIdAndUpdate(id, { crowd }, { new: true });
+  const place = await Place.findById(id);
+  if (!place) {
+    return NextResponse.json({ success: false, error: "Place not found" }, { status: 404 });
+  }
+
+  // Merge feedbacks if provided
+  const updatedFeedbacks = info?.feedbacks
+    ? [...place.info.feedbacks, ...info.feedbacks]
+    : place.info.feedbacks;
+
+  const updated = await Place.findByIdAndUpdate(
+    id,
+    {
+      crowd: crowd || place.crowd,
+      info: {
+        placeInfo: info?.placeInfo || place.info.placeInfo,
+        hospitals: info?.hospitals || place.info.hospitals,
+        temperature: info?.temperature || place.info.temperature,
+        aqi: info?.aqi || place.info.aqi,
+        hotels: info?.hotels || place.info.hotels,
+        feedbacks: updatedFeedbacks,
+      },
+    },
+    { new: true }
+  );
+
   return NextResponse.json({ success: true, place: updated });
+}
+
+export async function DELETE(req: NextRequest) {
+  await dbConnect();
+  try {
+    const { id } = await req.json();
+    const deleted = await Place.findByIdAndDelete(id);
+
+    if (!deleted) return NextResponse.json({ success: false, error: "Place not found" }, { status: 404 });
+
+    return NextResponse.json({ success: true, message: "Place deleted successfully" });
+  } catch (err) {
+    return NextResponse.json({ success: false, error: "Delete failed" }, { status: 500 });
+  }
 }

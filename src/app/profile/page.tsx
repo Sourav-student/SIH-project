@@ -10,21 +10,19 @@ import Image from "next/image";
 type UserData = {
   user_name: string;
   name: string;
-  phone_no: string;
+  phone_no: number;
   image: string;
   email?: string;
 };
 
 export default function Profile() {
   const router = useRouter();
-  const { setUser } = useAppContext();
-
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const { setUser, userInfo, setUserInfo } = useAppContext();
   const [editMode, setEditMode] = useState(false);
   const [newUserData, setNewUserData] = useState<UserData>({
     user_name: "",
     name: "",
-    phone_no: "",
+    phone_no: 0,
     image: "",
   });
   const [file, setFile] = useState<File | null>(null);
@@ -38,8 +36,8 @@ export default function Profile() {
 
         const user_name = JSON.parse(stored);
         const res = await axios.get(`/api/user`, { params: { user_name } });
-
-        if (res.data?.data) setUserData(res.data.data);
+        // console.log(res.data.data);
+        if (res.data?.data) setUserInfo(res.data.data);
       } catch (error) {
         console.error("Error fetching user:", error);
         toast.error("Failed to load profile");
@@ -51,16 +49,17 @@ export default function Profile() {
 
   // Prepare form data when entering edit mode
   useEffect(() => {
-    if (editMode && userData) {
+    if (editMode && userInfo) {
       setNewUserData({
-        user_name: userData.user_name,
-        name: userData.name,
-        phone_no: userData.phone_no,
-        image: userData.image,
+        user_name: userInfo.user_name,
+        name: userInfo.name,
+        phone_no: userInfo.phone_no,
+        image: userInfo.image,
       });
     }
-  }, [editMode, userData]);
+  }, [editMode, userInfo]);
 
+  // logout function
   const handleLogout = () => {
     localStorage.removeItem("user-name");
     localStorage.removeItem("profile-data");
@@ -80,6 +79,7 @@ export default function Profile() {
     }
   };
 
+  // make changes
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newUserData.user_name) return;
@@ -87,7 +87,7 @@ export default function Profile() {
     const formData = new FormData();
     formData.append("user_name", newUserData.user_name);
     formData.append("name", newUserData.name);
-    formData.append("phone_no", newUserData.phone_no);
+    formData.append("phone_no", newUserData.phone_no.toString());
     if (file) formData.append("file", file);
 
     try {
@@ -96,7 +96,7 @@ export default function Profile() {
       });
 
       if (res.data?.data) {
-        setUserData(res.data.data);
+        setUserInfo(res.data.data);
         localStorage.setItem("profile-data", JSON.stringify(res.data.data));
       }
 
@@ -108,7 +108,7 @@ export default function Profile() {
     }
   };
 
-  if (!userData) {
+  if (!userInfo) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-orange-50">
         <p className="text-orange-700 text-lg">Loading profile...</p>
@@ -116,17 +116,17 @@ export default function Profile() {
     );
   }
 
-  const firstLetter = userData.user_name
-    ? userData.user_name.charAt(0).toUpperCase()
+  const firstLetter = userInfo?.name
+    ? userInfo?.name.charAt(0).toUpperCase()
     : "U";
 
   return (
     <div className="min-h-screen font-serif bg-orange-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 text-center">
         {/* Avatar */}
-        {userData.image ? (
+        {userInfo?.image ? (
           <Image
-            src={userData.image}
+            src={userInfo.image}
             alt="Profile"
             width={96}
             height={96}
@@ -140,7 +140,7 @@ export default function Profile() {
 
         {/* Name */}
         <h1 className="mt-4 text-2xl font-bold text-gray-800">
-          {userData.user_name || "Your Name"}
+          {userInfo.name || userInfo.user_name || "Your Name"}
         </h1>
 
         {/* Buttons */}
@@ -194,9 +194,9 @@ export default function Profile() {
               </label>
               <input
                 type="tel"
-                value={newUserData.phone_no?? ""}
+                value={newUserData.phone_no ?? ""}
                 onChange={(e) =>
-                  setNewUserData({ ...newUserData, phone_no: e.target.value })
+                  setNewUserData({ ...newUserData, phone_no: Number(e.target.value)})
                 }
                 className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none"
               />
@@ -214,13 +214,13 @@ export default function Profile() {
         {/* View Mode */}
         {!editMode && (
           <div className="mt-8 space-y-4 text-left">
-            {/* <div className="bg-orange-100 rounded-lg px-4 py-3">
+            <div className="bg-orange-100 rounded-lg px-4 py-3">
               <p className="text-sm font-semibold text-gray-700">📧 Email</p>
-              <p className="text-gray-800">{userData.email || "Not set"}</p>
-            </div> */}
+              <p className="text-gray-800">{userInfo.email || "Not set"}</p>
+            </div>
             <div className="bg-orange-100 rounded-lg px-4 py-3">
               <p className="text-sm font-semibold text-gray-700">📱 Phone</p>
-              <p className="text-gray-800">{userData.phone_no || "Not set"}</p>
+              <p className="text-gray-800">{userInfo.phone_no || "Not set"}</p>
             </div>
           </div>
         )}

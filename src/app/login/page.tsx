@@ -14,7 +14,7 @@ export default function LoginForm() {
     password: "",
   });
   const [submit, setSubmit] = useState(false);
-  const { setUser } = useAppContext();
+  const { setUser, setUserInfo, setUserType } = useAppContext();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +26,8 @@ export default function LoginForm() {
         router.push('/');
         toast.success(res.data.message);
         setUser(true);
+        setUserInfo(res.data.user_info);
+        setUserType(res.data.user_info.role);
       } else {
         toast.error(res.data.message);
       }
