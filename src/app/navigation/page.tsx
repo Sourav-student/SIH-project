@@ -220,7 +220,7 @@ export default function Navigation() {
             </p>
             <Link
               href={`/navigation/${place.name}?q=${place._id}`}
-              className="mt-3 py-2 px-2 bg-amber-600 text-white rounded-lg cursor-pointer"
+              className="mt-3 py-1 px-2 bg-amber-600 text-white rounded-lg cursor-pointer"
             >
               Learn more
             </Link>
@@ -233,7 +233,7 @@ export default function Navigation() {
                     Edit
                   </button> */}
                   <button
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition-colors cursor-pointer"
+                    className="px-2 py-1 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition-colors cursor-pointer"
                     onClick={() => handleDelete(place._id)}
                   >
                     Delete
