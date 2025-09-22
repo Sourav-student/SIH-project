@@ -83,6 +83,15 @@ export default function DynamicRouteClient({ query }: { query?: string }) {
     }
   };
 
+  const openInMaps = async (placeName: string) => {
+    try {
+      const res = await axios.post("/api/maps", { name: placeName });
+      if (res.data.success) window.open(res.data.url, "_blank");
+    } catch (err) {
+      console.error("Google Maps error:", err);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-orange-50">
@@ -98,7 +107,14 @@ export default function DynamicRouteClient({ query }: { query?: string }) {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md mt-8">
-      <h1 className="text-3xl font-bold text-orange-600 mb-4">{place.name}</h1>
+      <div className="flex justify-between px-4 items-center">
+        <h1 className="text-3xl font-bold text-orange-600 mb-4">{place.name}</h1>
+        <button
+          className="px-3 py-1 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 transition-colors cursor-pointer"
+          onClick={() => openInMaps(place.name)}>
+          Redirect to map
+        </button>
+      </div>
       <p className="mb-4 text-gray-700">{place.info.placeInfo}</p>
 
       {/* Info Cards */}
