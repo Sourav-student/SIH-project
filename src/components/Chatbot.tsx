@@ -26,9 +26,9 @@ export default function ChatBot() {
   const handleSend = () => {
     if (!input || !input.trim()) return;
 
-    const newMessages = [
+    const newMessages: { type: "user" | "bot"; text: string }[] = [
       ...messages,
-      { type: "user" as "user", text: input }
+      { type: "user", text: input } // no type assertion needed
     ];
 
     const match = qaList.find(q =>
@@ -40,13 +40,11 @@ export default function ChatBot() {
       ? match.answer
       : "Sorry, I don't have an answer for that. Please ask another question.";
 
-    newMessages.push({ type: "bot" as "bot", text: botAnswer });
+    newMessages.push({ type: "bot", text: botAnswer }); // no type assertion needed
 
     setMessages(newMessages);
     setInput("");
   };
-
-
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleSend();
@@ -60,11 +58,11 @@ export default function ChatBot() {
           onClick={() => setOpen(true)}
           className="fixed bottom-14 right-6 bg-orange-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-2xl hover:bg-orange-700 transition"
         >
-          <Image 
-           src="/chatbot.svg"
-           alt="💬"
-           width={30}
-           height={30}/>
+          <Image
+            src="/chatbot.svg"
+            alt="💬"
+            width={30}
+            height={30} />
         </button>
       )}
 

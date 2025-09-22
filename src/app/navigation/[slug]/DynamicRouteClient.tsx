@@ -156,7 +156,7 @@ export default function DynamicRouteClient({ query }: { query?: string }) {
         ) : (
           <ul className="list-disc list-inside mb-2">
             {place.info.feedbacks.map((f, idx) => (
-              <li key={idx}>"{f}"</li>
+              <li key={idx}>{f}</li>
             ))}
           </ul>
         )}
