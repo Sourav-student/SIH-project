@@ -56,7 +56,7 @@ export default function ChatBot() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-14 right-6 bg-orange-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-2xl hover:bg-orange-700 transition"
+          className="fixed bottom-20 z-50 right-6 bg-orange-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-2xl hover:bg-orange-700 transition"
         >
           <Image
             src="/chatbot.svg"
@@ -68,7 +68,7 @@ export default function ChatBot() {
 
       {/* Chat Popup */}
       {open && (
-        <div className="fixed bottom-20 right-6 w-80 h-[70vh] bg-white rounded-xl shadow-xl flex flex-col font-sans">
+        <div className="fixed bottom-20 z-50 right-6 w-80 h-[70vh] bg-white rounded-xl shadow-xl flex flex-col font-sans">
           {/* Header */}
           <div className="flex justify-between items-center p-3 bg-orange-600 rounded-t-xl text-white">
             <h2 className="font-bold text-lg">Jharkhand Tourism Bot</h2>
